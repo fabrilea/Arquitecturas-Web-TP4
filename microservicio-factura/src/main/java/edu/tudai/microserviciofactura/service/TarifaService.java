@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,5 +38,14 @@ public class TarifaService {
     @Transactional
     public void delete(Long id) {
         tarifaRepository.deleteById(id);
+    }
+
+    /*****************************************************/
+
+    public void ajustarPrecios(double nuevaTarifaBase, double nuevaTarifaExtra, LocalDate fechaInicio) {
+        Tarifa tarifaBase = new Tarifa(Tarifa.TipoTarifa.BASE, nuevaTarifaBase, fechaInicio, null);
+        Tarifa tarifaExtra = new Tarifa(Tarifa.TipoTarifa.EXTRA_PAUSA, nuevaTarifaExtra, fechaInicio, null);
+        tarifaRepository.save(tarifaBase);
+        tarifaRepository.save(tarifaExtra);
     }
 }

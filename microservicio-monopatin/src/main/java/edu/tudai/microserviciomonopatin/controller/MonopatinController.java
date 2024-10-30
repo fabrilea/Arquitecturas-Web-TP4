@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -71,4 +72,25 @@ public class MonopatinController {
     }
 
     /********************************************************************/
+
+
+    @GetMapping("/viajes")
+    public ResponseEntity<List<Monopatin>> obtenerMonopatinesConMasViajes(
+            @RequestParam int minViajes, @RequestParam int anio) {
+        List<Monopatin> result = monopatinService.obtenerMonopatinesConMasViajes(minViajes, anio);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/estado")
+    public ResponseEntity<Map<String, Long>> obtenerEstadoMonopatines() {
+        Map<String, Long> estado = monopatinService.obtenerEstadoMonopatines();
+        return ResponseEntity.ok(estado);
+    }
+
+    @GetMapping("/cercanos")
+    public ResponseEntity<List<Monopatin>> obtenerMonopatinesCercanos(
+            @RequestParam double latitud, @RequestParam double longitud, @RequestParam double radio) {
+        List<Monopatin> monopatines = monopatinService.obtenerMonopatinesCercanos(latitud, longitud, radio);
+        return ResponseEntity.ok(monopatines);
+    }
 }

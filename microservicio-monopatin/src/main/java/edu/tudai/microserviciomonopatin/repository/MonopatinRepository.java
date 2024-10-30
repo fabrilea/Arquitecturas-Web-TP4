@@ -3,6 +3,7 @@ package edu.tudai.microserviciomonopatin.repository;
 import edu.tudai.microserviciomonopatin.entity.Monopatin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,11 +11,20 @@ import java.util.List;
 @Repository
 public interface MonopatinRepository extends JpaRepository<Monopatin, Long> {
 
-    @Query("SELECT new edu.tudai.microserviciomonopatin.dto.MonopatinReporteDTO(m.id, SUM(m.kilometrosRecorridos), m.tiempoUso) " +
-            "FROM Monopatin m GROUP BY m.id")
-    List<MonopatinReporteDTO> reporteKilometrosRecorridos();
+    // Contar monopatines disponibles y no en mantenimiento
+    @Query("SELECT COUNT(m) FROM Monopatin m WHERE m.disponible = true AND m.enMantenimiento = false")
+    long countByDisponibleTrueAndEnMantenimientoFalse();
 
-    @Query("SELECT new edu.tudai.microserviciomonopatin.dto.MonopatinReporteDTO(m.id, null, SUM(m.tiempoUso)) " +
-            "FROM Monopatin m GROUP BY m.id")
-    List<MonopatinReporteDTO> reporteTiempoSinPausas();
+    // Contar monopatines en mantenimiento
+    @Query("SELECT COUNT(m) FROM Monopatin m WHERE m.enMantenimiento = true")
+    long countByEnMantenimientoTrue();
+
+
+    @Query("SELECT m FROM Monopatin m WHERE " +
+            "(6371 * acos(cos(radians(:latitud)) * cos(radians(m.latitud)) * " +
+            "cos(radians(m.longitud) - radians(:longitud)) + sin(radians(:latitud)) * " +
+            "sin(radians(m.latitud)))) < :radio")
+    List<Monopatin> findMonopatinesCercanos(@Param("latitud") double latitud,
+                                            @Param("longitud") double longitud,
+                                            @Param("radio") double radio);
 }

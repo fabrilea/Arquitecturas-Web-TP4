@@ -1,5 +1,6 @@
 package edu.tudai.microservicioadministrador.controller;
 
+import edu.tudai.microservicioadministrador.dto.ReporteKilometrosDTO;
 import edu.tudai.microservicioadministrador.entity.Mantenimiento;
 import edu.tudai.microservicioadministrador.service.MantenimientoService;
 import lombok.RequiredArgsConstructor;
@@ -81,5 +82,11 @@ public class MantenimientoController {
     public ResponseEntity<Mantenimiento> finalizarMantenimiento(@PathVariable Long monopatinId) {
         Mantenimiento mantenimiento = mantenimientoService.finalizarMantenimiento(monopatinId);
         return ResponseEntity.ok(mantenimiento);
+    }
+
+    @GetMapping("/reporte-uso")
+    public ResponseEntity<List<ReporteKilometrosDTO>> generarReporteUsoMonopatines(
+            @RequestParam boolean incluirPausas) {
+        return ResponseEntity.ok(mantenimientoService.generarReporteUsoMonopatines(incluirPausas));
     }
 }

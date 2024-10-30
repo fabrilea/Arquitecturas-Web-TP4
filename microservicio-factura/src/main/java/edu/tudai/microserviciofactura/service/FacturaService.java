@@ -38,4 +38,10 @@ public class FacturaService {
     public void delete(Long id) {
         facturaRepository.deleteById(id);
     }
+
+    /************************************************************/
+
+    public double obtenerTotalFacturado(int anio, int mesInicio, int mesFin) {
+        return facturaRepository.obtenerTotalFacturado(anio, mesInicio, mesFin);
+    }
 }

@@ -11,6 +11,7 @@ public class Monopatin {
 
     private double bateria;
     private boolean disponible;
+    private boolean enMantenimiento;
     private double latitud;
     private double longitud;
     private double kilometrosRecorridos;
@@ -25,12 +26,13 @@ public class Monopatin {
         super();
     }
 
-    public Monopatin(Double latitud, Double longitud, Double bateria, boolean disponible, double kilometrosRecorridos, double tiempoUso, Parada parada) {
+    public Monopatin(Double latitud, Double longitud, Double bateria, double kilometrosRecorridos, double tiempoUso, Parada parada) {
         super();
         this.latitud = latitud;
         this.longitud = longitud;
         this.bateria = bateria;
-        this.disponible = disponible;
+        this.disponible = true;
+        this.enMantenimiento = false;
         this.kilometrosRecorridos = kilometrosRecorridos;
         this.tiempoUso = tiempoUso;
         this.parada = parada;
@@ -70,6 +72,14 @@ public class Monopatin {
 
     public void setDisponible(boolean disponible){
         this.disponible = disponible;
+    }
+
+    public boolean isEnMantenimiento(){
+        return enMantenimiento;
+    }
+
+    public void setEnMantenimiento(boolean enMantenimiento){
+        this.enMantenimiento = enMantenimiento;
     }
 
     public double getKilometrosRecorridos(){

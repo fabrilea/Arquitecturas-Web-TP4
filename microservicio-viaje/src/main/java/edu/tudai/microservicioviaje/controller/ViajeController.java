@@ -1,6 +1,6 @@
 package edu.tudai.microservicioviaje.controller;
 
-import edu.tudai.microservicioviaje.dto.ViajeDTO;
+import edu.tudai.microservicioviaje.dto.ReporteKilometrosDTO;
 import edu.tudai.microservicioviaje.entity.Pausa;
 import edu.tudai.microservicioviaje.entity.Viaje;
 import edu.tudai.microservicioviaje.service.ViajeService;
@@ -58,8 +58,11 @@ public class ViajeController {
             return ResponseEntity.noContent().build();
         }
 
+        viajeExistente.setFechaInicio(viaje.getFechaInicio());
+        viajeExistente.setFechaFin(viaje.getFechaFin());
         viajeExistente.setMonopatinId(viaje.getMonopatinId());
-        viajeExistente.setTiempoUso(viaje.getTiempoUso());
+        viajeExistente.setEnCurso(viaje.isEnCurso());
+        viajeExistente.setKilometrosRecorridos(viaje.getKilometrosRecorridos());
 
         Viaje viajeUpdated = viajeService.save(viajeExistente);
         return ResponseEntity.ok(viajeUpdated);
@@ -68,18 +71,20 @@ public class ViajeController {
 
     /****************************************************/
 
-
-    @GetMapping("/monopatin/{monopatinId}")
-    public ResponseEntity<List<ViajeDTO>> obtenerViajesPorMonopatin(@PathVariable("monopatinId") Long monopatinId) {
-        List<ViajeDTO> viajes = viajeService.obtenerViajesPorMonopatin(monopatinId);
-        return ResponseEntity.ok(viajes);
-    }
-
-
     @GetMapping("/{viajeId}/tiempo-total-con-pausas")
     public ResponseEntity<Double> obtenerTiempoTotalConPausas(@PathVariable("viajeId") Long viajeId) {
         Double tiempoTotalConPausas = viajeService.calcularTiempoTotalConPausas(viajeId);
         return ResponseEntity.ok(tiempoTotalConPausas);
+    }
+
+    @PutMapping("/{viajeId}/finalizar")
+    public ResponseEntity<Viaje> finalizarViaje(@PathVariable Long viajeId, @RequestParam double kilometrosRecorridos) {
+        try {
+            Viaje viajeFinalizado = viajeService.finalizarViaje(viajeId, kilometrosRecorridos);
+            return ResponseEntity.ok(viajeFinalizado);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PutMapping("/agregarPausa/{id}")
@@ -93,5 +98,14 @@ public class ViajeController {
         viajeExistente.getPausas().add(pausa);
         viajeService.save(viajeExistente);  // Guardar el viaje actualizado con la nueva pausa
         return ResponseEntity.ok(viajeExistente);
+    }
+
+    @GetMapping("/reportes/kilometros")
+    public ResponseEntity<List<ReporteKilometrosDTO>> obtenerReporteKilometros() {
+        List<ReporteKilometrosDTO> reporte = viajeService.generarReporteKilometros();
+        if (reporte.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(reporte);
     }
 }

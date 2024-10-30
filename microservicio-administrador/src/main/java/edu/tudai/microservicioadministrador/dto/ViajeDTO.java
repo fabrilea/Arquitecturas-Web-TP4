@@ -1,18 +1,14 @@
-package edu.tudai.microservicioviaje.entity;
+package edu.tudai.microservicioadministrador.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-public class Viaje {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ViajeDTO {
     private Long id;
 
     private Long monopatinId;
@@ -21,28 +17,24 @@ public class Viaje {
     private double kilometrosRecorridos;
     private boolean enCurso;
 
-    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("viaje")
-    private List<Pausa> pausas;
+    @OneToMany(mappedBy = "viajeDTO", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("viajeDTO")
+    private List<PausaDTO> pausas;
 
-    public Viaje() {
-        super();
-        this.pausas = new ArrayList<>();
-    }
-
-    public Viaje(Long monopatinId, LocalDateTime fechaInicio, LocalDateTime fechaFin, double kilometrosRecorridos) {
-        super();
+    public ViajeDTO(Long id, Long monopatinId, LocalDateTime fechaInicio, LocalDateTime fechaFin, double kilometrosRecorridos, boolean enCurso) {
+        this.id = id;
         this.monopatinId = monopatinId;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
-        this.kilometrosRecorridos = kilometrosRecorridos;
-        this.enCurso = true;
+        this.enCurso = enCurso;
     }
 
-
-    // Getters y Setters
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getMonopatinId() {
@@ -85,7 +77,7 @@ public class Viaje {
         this.enCurso = enCurso;
     }
 
-    public List<Pausa> getPausas() {
+    public List<PausaDTO> getPausas(){
         return pausas;
     }
 

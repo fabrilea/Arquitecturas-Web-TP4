@@ -17,7 +17,7 @@ public class DetalleFacturaController {
     private final DetalleFacturaService detalleFacturaService;
 
     @GetMapping
-    public ResponseEntity<List<DetalleFactura>> getAllDetallesFacturas() {
+    public ResponseEntity<List<DetalleFactura>> getAllDetallesFactura() {
         List<DetalleFactura> detalleFacturas = detalleFacturaService.findAll();
         if (detalleFacturas.isEmpty()) {
             return ResponseEntity.noContent().build();
@@ -34,5 +34,38 @@ public class DetalleFacturaController {
         return ResponseEntity.ok(detalleFactura);
     }
 
+    @PostMapping
+    public ResponseEntity<DetalleFactura> createDetalleFactura(@RequestBody DetalleFactura monopatin) {
+        DetalleFactura detalleFacturaCreated = detalleFacturaService.save(monopatin);
+        if (detalleFacturaCreated == null) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(detalleFacturaCreated);
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteDetalleFactura(@PathVariable("id") Long id) {
+        detalleFacturaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DetalleFactura> updateDetalleFactura(@PathVariable("id") Long id, @RequestBody DetalleFactura detalleFactura) {
+        DetalleFactura detalleFacturaExistente = detalleFacturaService.findById(id);
+
+        if (detalleFacturaExistente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        detalleFacturaExistente.setFactura(detalleFactura.getFactura());
+        detalleFacturaExistente.setTiempoUso(detalleFactura.getTiempoUso());
+        detalleFacturaExistente.setTiempoPausado(detalleFactura.getTiempoPausado());
+        detalleFacturaExistente.setTarifaBase(detalleFactura.getTarifaBase());
+        detalleFacturaExistente.setTarifaExtra(detalleFactura.getTarifaExtra());
+        detalleFacturaExistente.setViajeId(detalleFactura.getViajeId());
+
+        DetalleFactura detalleFacturaUpdated = detalleFacturaService.save(detalleFacturaExistente);
+
+        return ResponseEntity.ok(detalleFacturaUpdated);
+    }
 }

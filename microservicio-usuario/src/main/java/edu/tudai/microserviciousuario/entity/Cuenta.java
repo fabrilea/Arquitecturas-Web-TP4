@@ -13,6 +13,7 @@ public class Cuenta {
 
     private String fechaAlta;
     private Double saldo;
+    private boolean activa;
 
     @ManyToMany
     private List<Usuario> usuarios;
@@ -25,6 +26,7 @@ public class Cuenta {
     public Cuenta(String fechaAlta, Double saldo) {
         this.fechaAlta = fechaAlta;
         this.saldo = saldo;
+        this.activa = true;
     }
 
     //Getters y Setters
@@ -46,6 +48,14 @@ public class Cuenta {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
     }
 
     public List<Usuario> getUsuarios() {

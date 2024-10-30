@@ -40,4 +40,13 @@ public class CuentaService {
     public void delete(Long id) {
         cuentaRepository.deleteById(id);
     }
+
+    /****************************************************************/
+
+    public void anularCuenta(Long cuentaId) {
+        Cuenta cuenta = cuentaRepository.findById(cuentaId)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+        cuenta.setActiva(false);
+        cuentaRepository.save(cuenta);
+    }
 }

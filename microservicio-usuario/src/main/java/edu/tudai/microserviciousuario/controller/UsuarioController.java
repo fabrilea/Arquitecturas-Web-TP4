@@ -66,4 +66,12 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioUpdated);
     }
 
+    /*******************************************************************/
+
+    @PutMapping("/{id}/anular")
+    public ResponseEntity<Void> anularCuenta(@PathVariable Long id) {
+        cuentasService.anularCuenta(id);
+        return ResponseEntity.ok().build();
+    }
+
 }

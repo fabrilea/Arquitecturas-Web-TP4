@@ -1,15 +1,20 @@
 package edu.tudai.microservicioadministrador.service;
 
 import edu.tudai.microservicioadministrador.client.MonopatinClient;
+import edu.tudai.microservicioadministrador.client.ViajeClient;
+import edu.tudai.microservicioadministrador.dto.ReporteKilometrosDTO;
+import edu.tudai.microservicioadministrador.dto.ViajeDTO;
 import edu.tudai.microservicioadministrador.entity.Mantenimiento;
 import edu.tudai.microservicioadministrador.repository.MantenimientoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +22,7 @@ public class MantenimientoService {
 
     private final MantenimientoRepository mantenimientoRepository;
     private final MonopatinClient monopatinClient;
+    private final ViajeClient viajeClient;
 
     @Transactional(readOnly = true)
     public List<Mantenimiento> findAll() {
@@ -61,6 +67,7 @@ public class MantenimientoService {
 
         // Marcar el monopatín como no disponible
         monopatinClient.actualizarDisponibilidad(monopatinId, false);
+        monopatinClient.actualizarEnMantenimiento(monopatinId, true);
 
         return mantenimiento;
     }
@@ -76,7 +83,29 @@ public class MantenimientoService {
 
         // Marcar el monopatín como disponible
         monopatinClient.actualizarDisponibilidad(monopatinId, true);
+        monopatinClient.actualizarEnMantenimiento(monopatinId, false);
 
         return mantenimiento;
     }
+
+    public List<ReporteKilometrosDTO> generarReporteUsoMonopatines(boolean incluirPausas) {
+        List<ViajeDTO> viajes = viajeClient.getAllViajes();
+        return viajes.stream()
+                .map(v -> {
+                    double tiempoTotal = v.getTiempoUso();
+
+                    if (!incluirPausas && v.getPausas() != null) {
+                        double tiempoPausas = v.getPausas().stream()
+                                .filter(p -> p.getFin() != null) // Ignora pausas en curso
+                                .mapToDouble(p -> Duration.between(p.getInicio(), p.getFin()).toMinutes())
+                                .sum();
+                        tiempoTotal -= tiempoPausas;
+                    }
+
+                    return new ReporteKilometrosDTO(
+                            v.getMonopatinId(), v.getKilometrosRecorridos(), tiempoTotal);
+                })
+                .collect(Collectors.toList());
+    }
+
 }
