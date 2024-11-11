@@ -1,7 +1,11 @@
 package edu.tudai.microserviciofactura.controller;
 
+import edu.tudai.microserviciofactura.dto.DetalleFacturaDTO;
 import edu.tudai.microserviciofactura.entity.DetalleFactura;
+import edu.tudai.microserviciofactura.entity.Factura;
+import edu.tudai.microserviciofactura.repository.FacturaRepository;
 import edu.tudai.microserviciofactura.service.DetalleFacturaService;
+import edu.tudai.microserviciofactura.service.FacturaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import java.util.List;
 public class DetalleFacturaController {
 
     private final DetalleFacturaService detalleFacturaService;
+    private final FacturaService facturaService;
 
     @GetMapping
     public ResponseEntity<List<DetalleFactura>> getAllDetallesFactura() {
@@ -35,14 +40,17 @@ public class DetalleFacturaController {
     }
 
     @PostMapping
-    public ResponseEntity<DetalleFactura> createDetalleFactura(@RequestBody DetalleFactura monopatin) {
-        DetalleFactura detalleFacturaCreated = detalleFacturaService.save(monopatin);
-        if (detalleFacturaCreated == null) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(detalleFacturaCreated);
-    }
+    public ResponseEntity<DetalleFactura> createDetalleFactura(@RequestBody DetalleFacturaDTO detalleDTO) {
+        Factura factura = facturaService.findById(detalleDTO.getFacturaId());
 
+        DetalleFactura detalle = new DetalleFactura(factura, detalleDTO.getViajeId(),
+                detalleDTO.getTarifaBase(), detalleDTO.getTarifaExtra(),
+                detalleDTO.getTiempoUso(), detalleDTO.getTiempoPausado());
+
+        detalle.calcularMonto();  // Calcular el monto antes de guardar
+        detalleFacturaService.save(detalle);
+        return ResponseEntity.ok(detalle);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDetalleFactura(@PathVariable("id") Long id) {
         detalleFacturaService.delete(id);

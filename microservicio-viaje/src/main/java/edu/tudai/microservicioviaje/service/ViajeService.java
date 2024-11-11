@@ -119,39 +119,35 @@ public class ViajeService {
     // total += viaje.getTiempoUso() - tiempo(antes de la pausa) * costoKilometro;
     // total += viaje.getTiempoUso() -(viaje.getTiempoUso() - tiempo(antes de la pausa)) * tarifaExtra;
     // no encotre la forma de lo otro por eso suerte a quien lo intente
-
-   /* public double calcularCostoViaje(long viajeId){
-        Viaje viaje = viajeRepository.findById(viajeId).orElseThrow(()-> new RuntimeException("viaje no encontrado"));
-
+    /*public double calcularCostoViaje(long viajeId) {
+        Viaje viaje = viajeRepository.findById(viajeId).orElseThrow(() -> new RuntimeException("viaje no encontrado"));
         double total = 0.0;
 
-        if(debeAplicartarifaExtra(viaje)){
-            double tiempo = obtenerPausaAumentada(viaje.getPausas());
+        if (debeAplicarTarifaExtra(viaje)) {
+            Duration tiempo = obtenerDuracionPausaAumentada(viaje.getPausas());
 
-            double minutos = tiempo.toMinutes() + tiempo.getSeconds() / 60.0;
+            if (tiempo != null) {
+                double minutos = tiempo.toMinutes() + (tiempo.getSeconds() % 60) / 60.0;
+                total += minutos * tarifaExtraPorMinuto; // tarifaExtraPorMinuto debe estar definido
+            }
         }
 
         total += viaje.getTiempoUso() * costoKilometro;
-
-
-
         return total;
     }
 
-    public boolean debeAplicartarifaExtra(Viaje viaje){
+    public boolean debeAplicarTarifaExtra(Viaje viaje) {
         return viaje.getPausas().stream().anyMatch(pausa -> pausa.getDuracion() > tiempMaxPausa);
     }
 
-    public LocalDateTime obtenerPausaAumentada(List<Pausa> pausas) {
-        final Pausa[] pausaEncontrada = {null}; // Usamos un array para mantener la referencia de la pausa
-
-        pausas.forEach(pausa -> {
-            if (pausa.getDuracion() > tiempMaxPausa && pausaEncontrada[0] == null) {
-                pausaEncontrada[0] = pausa; // Asignamos la pausa al encontrar la primera que cumpla el criterio
+    public Duration obtenerDuracionPausaAumentada(List<Pausa> pausas) {
+        for (Pausa pausa : pausas) {
+            if (pausa.getDuracion() > tiempMaxPausa) {
+                return Duration.ofMinutes(pausa.getDuracion()).plusMinutes(15); // Agrega 15 minutos a la duración de la pausa
             }
-        });
-
-        return pausaEncontrada[0].getInicio().plusMinutes(15) / 60.0; // Retorna la primera pausa encontrada o null si no se encontró ninguna
-    }*/
+        }
+        return null; // Retorna null si no se encuentra ninguna pausa que exceda la duración máxima
+    }
+*/
 
 }

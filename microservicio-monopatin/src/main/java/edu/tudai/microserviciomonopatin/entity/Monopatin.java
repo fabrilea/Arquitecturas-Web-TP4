@@ -21,21 +21,27 @@ public class Monopatin {
     @JoinColumn(name = "parada_id", nullable = false)
     private Parada parada;
 
+    private double tarifaBase;
+
+    private double tarifaExtraPausa;
+
 
     public Monopatin() {
         super();
     }
 
-    public Monopatin(Double latitud, Double longitud, Double bateria, double kilometrosRecorridos, double tiempoUso, Parada parada) {
+    public Monopatin(Double bateria, Double latitud, Double longitud,  double kilometrosRecorridos, double tiempoUso, Parada parada, double tarifaBase, double tarifaExtraPausa) {
         super();
+        this.bateria = bateria;
         this.latitud = latitud;
         this.longitud = longitud;
-        this.bateria = bateria;
         this.disponible = true;
         this.enMantenimiento = false;
         this.kilometrosRecorridos = kilometrosRecorridos;
         this.tiempoUso = tiempoUso;
         this.parada = parada;
+        this.tarifaBase = tarifaBase;
+        this.tarifaExtraPausa = tarifaExtraPausa;
     }
 
     public Long getId() {
@@ -104,5 +110,21 @@ public class Monopatin {
 
     public void setParada(Parada parada){
         this.parada = parada;
+    }
+
+    public double getTarifaBase(){
+        return tarifaBase;
+    }
+
+    public void setTarifaBase(double tarifaBase){
+        this.tarifaBase = tarifaBase;
+    }
+
+    public double getTarifaExtraPausa() {
+        return tarifaExtraPausa;
+    }
+
+    public void setTarifaExtraPausa(double tarifaExtraPausa) {
+        this.tarifaExtraPausa = tarifaExtraPausa;
     }
 }

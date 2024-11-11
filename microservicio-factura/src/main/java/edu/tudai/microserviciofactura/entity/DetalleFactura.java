@@ -1,6 +1,7 @@
 package edu.tudai.microserviciofactura.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class DetalleFactura {
 
     @ManyToOne
     @JoinColumn(name = "factura_id", nullable = false)
+    @JsonIgnore
     private Factura factura;
 
     private Long viajeId;

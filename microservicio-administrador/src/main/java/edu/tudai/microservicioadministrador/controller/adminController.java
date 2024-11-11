@@ -1,6 +1,6 @@
 package edu.tudai.microservicioadministrador.controller;
 
-import edu.tudai.microservicioadministrador.entity.Monopatin;
+import edu.tudai.microservicioadministrador.dto.MonopatinDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,9 +27,9 @@ public class adminController {
     }
 
     @GetMapping("/monopatinViajes/{minViajes}/{anio}")
-    public ResponseEntity<List<Monopatin>> obtenerMonopatinesConMasViajes(
+    public ResponseEntity<List<MonopatinDTO>> obtenerMonopatinesConMasViajes(
             @RequestParam int minViajes, @RequestParam int anio) {
-        List<Monopatin> result = adminService.obtenerMonopatinesConMasViajes(minViajes, anio);
+        List<MonopatinDTO> result = adminService.obtenerMonopatinesConMasViajes(minViajes, anio);
         return ResponseEntity.ok(result);
     }
 

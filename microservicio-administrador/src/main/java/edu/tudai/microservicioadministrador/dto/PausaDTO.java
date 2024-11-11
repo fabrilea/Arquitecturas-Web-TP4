@@ -21,7 +21,8 @@ public class PausaDTO {
     public PausaDTO() {
     }
 
-    public PausaDTO(LocalDateTime inicio, LocalDateTime fin, double duracion, ViajeDTO viaje) {
+    public PausaDTO(Long id, LocalDateTime inicio, LocalDateTime fin, double duracion, ViajeDTO viaje) {
+        this.id = id;
         this.inicio = inicio;
         this.fin = fin;
         this.duracion = duracion;

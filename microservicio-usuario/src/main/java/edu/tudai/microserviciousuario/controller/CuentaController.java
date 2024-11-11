@@ -68,20 +68,22 @@ public class CuentaController {
     }
 
     @PutMapping("/anular/{id}")
-    //@PreAuthorize("hasRole('ADMIN')
     public ResponseEntity<Cuenta>  anularCuenta(@PathVariable("id") long id) {
 
         Cuenta cuenta = cuentaService.findById(id);
 
+        cuentaService.anularCuenta(cuenta);
+
+        return ResponseEntity.ok(cuenta);
+    }
+
+    @PutMapping("/activarUsuario/{id}")
+    public ResponseEntity<Cuenta> activarUsuarioEnCuenta(@PathVariable("id") Long id, @RequestParam Long usuarioId) {
+        Cuenta cuenta = cuentaService.activarUsuarioEnCuenta(id, usuarioId);
         if (cuenta == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest().build();
         }
-        
-        cuenta.setActiva(false);
-
-        Cuenta cuentaUpdated = cuentaService.update(cuenta);
-
-        return ResponseEntity.ok(cuentaUpdated);
+        return ResponseEntity.ok(cuenta);
     }
 
 

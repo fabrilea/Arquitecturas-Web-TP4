@@ -5,11 +5,8 @@ import edu.tudai.microservicioadministrador.client.MonopatinClient;
 import edu.tudai.microservicioadministrador.client.cuentaClient;
 import edu.tudai.microservicioadministrador.client.facturaClient;
 import edu.tudai.microservicioadministrador.client.tarifaClient;
-import edu.tudai.microservicioadministrador.entity.Monopatin;
-import edu.tudai.microservicioadministrador.entity.Tarifa;
+import edu.tudai.microservicioadministrador.dto.MonopatinDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -34,7 +31,7 @@ public class adminService {
         cuentaClient.anularCuenta(id);
     }
 
-    public List<Monopatin> obtenerMonopatinesConMasViajes(int minViajes, int anio) {
+    public List<MonopatinDTO> obtenerMonopatinesConMasViajes(int minViajes, int anio) {
         return cuentaClient.obtenerMonopatinesConMasViajes(minViajes, anio);
     }
 

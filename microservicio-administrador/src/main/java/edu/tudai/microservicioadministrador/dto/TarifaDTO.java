@@ -1,19 +1,16 @@
-package edu.tudai.microservicioadministrador.entity;
+package edu.tudai.microservicioadministrador.dto;
 
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-@Entity
-public class Tarifa {
+public class TarifaDTO {
 
     public enum TipoTarifa {
         BASE,
         EXTRA_PAUSA
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
@@ -23,11 +20,12 @@ public class Tarifa {
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
 
-    public Tarifa() {
+    public TarifaDTO() {
         super();
     }
 
-    public Tarifa(TipoTarifa tipo, double monto, LocalDate fechaInicio, LocalDate fechaFin) {
+    public TarifaDTO(Long id, TipoTarifa tipo, double monto, LocalDate fechaInicio, LocalDate fechaFin) {
+        this.id = id;
         this.tipo = tipo;
         this.monto = monto;
         this.fechaInicio = fechaInicio;

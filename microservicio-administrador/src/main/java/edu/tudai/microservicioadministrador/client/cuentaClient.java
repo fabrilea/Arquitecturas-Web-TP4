@@ -1,7 +1,7 @@
 package edu.tudai.microservicioadministrador.client;
 
 
-import edu.tudai.microservicioadministrador.entity.Monopatin;
+import edu.tudai.microservicioadministrador.dto.MonopatinDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,6 @@ public interface cuentaClient {
     void anularCuenta(@PathVariable("id") long id);
 
     @GetMapping("/viajes/{minViajes}/{anio}")
-    List<Monopatin> obtenerMonopatinesConMasViajes(@PathVariable("minViajes") int minViajes, @PathVariable("anio") int anio);
+    List<MonopatinDTO> obtenerMonopatinesConMasViajes(@PathVariable("minViajes") int minViajes, @PathVariable("anio") int anio);
 
 }

@@ -1,5 +1,6 @@
 package edu.tudai.microserviciomonopatin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ public class Parada {
     private double longitud;
 
     @OneToMany(mappedBy = "parada")
+    @JsonIgnore
     private List<Monopatin> monopatines;
 
 

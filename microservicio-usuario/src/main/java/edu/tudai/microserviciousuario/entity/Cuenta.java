@@ -1,5 +1,6 @@
 package edu.tudai.microserviciousuario.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Cuenta {
     private boolean activa;
 
     @ManyToMany
+    @JsonIgnore
     private List<Usuario> usuarios;
 
     public Cuenta() {

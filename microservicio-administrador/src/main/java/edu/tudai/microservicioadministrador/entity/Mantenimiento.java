@@ -17,6 +17,7 @@ public class Mantenimiento {
 
     private LocalDateTime fechaInicio;
 
+    @Column(nullable = true)
     private LocalDateTime fechaFin;
 
     public Mantenimiento() {

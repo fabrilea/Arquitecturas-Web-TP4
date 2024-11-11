@@ -1,7 +1,10 @@
 package edu.tudai.microserviciomonopatin.controller;
 
+import edu.tudai.microserviciomonopatin.dto.monopatinDTO;
 import edu.tudai.microserviciomonopatin.entity.Monopatin;
+import edu.tudai.microserviciomonopatin.entity.Parada;
 import edu.tudai.microserviciomonopatin.service.MonopatinService;
+import edu.tudai.microserviciomonopatin.service.ParadaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import java.util.Map;
 public class MonopatinController {
 
     private final MonopatinService monopatinService;
+    private final ParadaService paradaService;
 
 
     @GetMapping
@@ -36,7 +40,10 @@ public class MonopatinController {
     }
 
     @PostMapping
-    public ResponseEntity<Monopatin> createMonopatin(@RequestBody Monopatin monopatin) {
+    public ResponseEntity<Monopatin> createMonopatin(@RequestBody monopatinDTO monopatinDTO) {
+        Parada parada = paradaService.findById(monopatinDTO.getParadaId());
+
+        Monopatin monopatin = new Monopatin(monopatinDTO.getBateria(), monopatinDTO.getLatitud(), monopatinDTO.getLongitud(), monopatinDTO.getKilometrosRecorridos(), monopatinDTO.getTiempoUso(), parada, monopatinDTO.getTarifaBase(), monopatinDTO.getTarifaExtraPausa());
         Monopatin monopatinCreated = monopatinService.save(monopatin);
         if (monopatinCreated == null) {
             return ResponseEntity.badRequest().build();
@@ -65,6 +72,7 @@ public class MonopatinController {
         monopatinExistente.setKilometrosRecorridos(monopatin.getKilometrosRecorridos());
         monopatinExistente.setDisponible(monopatin.isDisponible());
         monopatinExistente.setParada(monopatin.getParada());
+        monopatinExistente.setTarifaBase(monopatin.getTarifaBase());
 
         Monopatin monopatinUpdated = monopatinService.update(monopatinExistente);
 
