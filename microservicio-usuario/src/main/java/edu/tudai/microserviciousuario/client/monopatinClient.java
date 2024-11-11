@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "microservicio-monopatin", url = "http://localhost:8002")
-@RequestMapping("/api/monopatin")
+@FeignClient(name = "microservicio-monopatin", url = "http://localhost:8002/api/monopatin")
 public interface monopatinClient {
 
     @GetMapping("/cercanos")
     List<Monopatin> obtenerMonopatinesCercanos(
-            @Param("latitud") double latitud,
-            @Param("longitud") double longitud,
-            @Param("radio") double radio
+            @RequestParam("latitud") double latitud,
+            @RequestParam("longitud") double longitud,
+            @RequestParam("radio") double radio
     );
 
 }

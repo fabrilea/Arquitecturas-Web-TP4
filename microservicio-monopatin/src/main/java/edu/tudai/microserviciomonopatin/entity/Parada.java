@@ -26,7 +26,7 @@ public class Parada {
         this.monopatines = new ArrayList<>();
     }
 
-    public Parada(String nombre, String direccion, Double latitud, Double longitud) {
+    public Parada(String nombre, Double latitud, Double longitud) {
         super();
         this.nombre = nombre;
         this.latitud = latitud;

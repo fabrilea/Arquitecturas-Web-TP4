@@ -6,11 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 
-@FeignClient(name = "microservicio-factura", url = "http://localhost:8004")
-@RequestMapping("/api/tarifa")
+@FeignClient(name = "microservicio-factura", url = "http://localhost:8004/api/tarifa")
 public interface tarifaClient {
 
     @PostMapping("/ajustar-precios")
-    void ajustarPrecios(double nuevaTarifaBase, double nuevaTarifaExtra, LocalDate fechaInicio);
+    void ajustarPrecios(@RequestParam double nuevaTarifaBase, @RequestParam double nuevaTarifaExtra, @RequestParam LocalDate fechaInicio);
 
 }

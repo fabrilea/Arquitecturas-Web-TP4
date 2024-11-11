@@ -16,7 +16,7 @@
     <modules>
         <module>microservicio-usuario</module>
         <module>microservicio-monopatin</module>
-        <module>microservicio-parada</module>
+        <module>microservicio-factura</module>
         <module>microservicio-administrador</module>
         <module>microservicio-viaje</module>
     </modules>

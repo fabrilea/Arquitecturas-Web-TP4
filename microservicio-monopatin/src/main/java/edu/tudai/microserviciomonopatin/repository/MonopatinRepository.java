@@ -28,6 +28,6 @@ public interface MonopatinRepository extends JpaRepository<Monopatin, Long> {
                                             @Param("longitud") double longitud,
                                             @Param("radio") double radio);
 
-    @Query("SELECT m from Monopatin m WHERE m.kilometrosRecorridos <= km")
+    @Query("SELECT m from Monopatin m WHERE m.kilometrosRecorridos <= :km")
     List<Monopatin> findMonopatinesKilometros(Double km);
 }

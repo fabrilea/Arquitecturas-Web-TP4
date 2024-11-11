@@ -70,7 +70,7 @@ public class UsuarioController {
     /*******************************************************************/
 
     @GetMapping("/monopatin/cercanos")
-    public ResponseEntity<List<Monopatin>> getMonopatinCercanos(@RequestParam double latitud, @RequestParam double longitud, @RequestParam double radio){
+    public ResponseEntity<List<Monopatin>> obtenerMonopatinesCercanos(@RequestParam double latitud, @RequestParam double longitud, @RequestParam double radio){
         List<Monopatin> monopatines = usuarioService.obtenerMonopatinesCercanos(latitud, longitud, radio);
         if (monopatines.isEmpty()) {
             return ResponseEntity.noContent().build();

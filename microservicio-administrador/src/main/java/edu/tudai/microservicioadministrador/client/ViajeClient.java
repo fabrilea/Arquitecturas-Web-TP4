@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@FeignClient(name = "microservicio-viaje", url = "http://localhost:8005")
-@RequestMapping("/api/viaje")
+@FeignClient(name = "microservicio-viaje", url = "http://localhost:8005/api/viaje")
 public interface ViajeClient {
 
     @GetMapping("")

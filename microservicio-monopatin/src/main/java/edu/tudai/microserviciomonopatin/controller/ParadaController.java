@@ -61,7 +61,7 @@ public class ParadaController {
         paradaExistente.setLatitud(parada.getLatitud());
         paradaExistente.setLongitud(parada.getLongitud());
 
-        Parada paradaUpdated = paradaService.save(paradaExistente);
+        Parada paradaUpdated = paradaService.update(paradaExistente);
 
         return ResponseEntity.ok(paradaUpdated);
     }

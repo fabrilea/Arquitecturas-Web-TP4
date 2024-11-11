@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "microservicio-usuario", url = "http://localhost:8001")
-@RequestMapping("/api/cuenta")
+@FeignClient(name = "microservicio-usuario", url = "http://localhost:8001/api/cuenta")
 public interface cuentaClient {
 
     @PutMapping("/anularCuenta/{id}")
