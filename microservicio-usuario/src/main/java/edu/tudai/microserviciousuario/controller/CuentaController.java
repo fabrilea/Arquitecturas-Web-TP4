@@ -4,11 +4,12 @@ import edu.tudai.microserviciousuario.entity.Cuenta;
 import edu.tudai.microserviciousuario.entity.Usuario;
 import edu.tudai.microserviciousuario.service.CuentaService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+        import java.util.List;
 
 @RequiredArgsConstructor
 @Controller
@@ -65,4 +66,23 @@ public class CuentaController {
 
         return ResponseEntity.ok(cuentaUpdated);
     }
+
+    @PutMapping("/anular/{id}")
+    //@PreAuthorize("hasRole('ADMIN')
+    public ResponseEntity<Cuenta>  anularCuenta(@PathVariable("id") long id) {
+
+        Cuenta cuenta = cuentaService.findById(id);
+
+        if (cuenta == null) {
+            return ResponseEntity.notFound().build();
+        }
+        
+        cuenta.setActiva(false);
+
+        Cuenta cuentaUpdated = cuentaService.update(cuenta);
+
+        return ResponseEntity.ok(cuentaUpdated);
+    }
+
+
 }

@@ -64,7 +64,7 @@ public class DetalleFacturaController {
         detalleFacturaExistente.setTarifaExtra(detalleFactura.getTarifaExtra());
         detalleFacturaExistente.setViajeId(detalleFactura.getViajeId());
 
-        DetalleFactura detalleFacturaUpdated = detalleFacturaService.save(detalleFacturaExistente);
+        DetalleFactura detalleFacturaUpdated = detalleFacturaService.update(detalleFacturaExistente);
 
         return ResponseEntity.ok(detalleFacturaUpdated);
     }

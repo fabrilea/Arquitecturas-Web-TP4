@@ -2,11 +2,14 @@ package edu.tudai.microservicioadministrador.client;
 
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "monopatin-service", url = "http://localhost:8002/api/monopatin")
+import java.util.List;
+import java.util.Map;
+
+@FeignClient(name = "microservicio-monopatin", url = "http://localhost:8002")
+@RequestMapping("/api/monopatin")
 public interface MonopatinClient {
 
     @PutMapping("/{id}/disponibilidad")
@@ -14,4 +17,7 @@ public interface MonopatinClient {
 
     @PutMapping("/{id}/mantenimiento")
     void actualizarEnMantenimiento(@PathVariable("id") Long id, @RequestParam("enMantenimiento") boolean disponible);
+
+    @GetMapping("/estado")
+    Map<String, Long> obtenerEstadoMonopatines();
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,9 +47,9 @@ public class MonopatinService {
     public Map<String, Long> obtenerEstadoMonopatines() {
         long enOperacion = monopatinRepository.countByDisponibleTrueAndEnMantenimientoFalse();
         long enMantenimiento = monopatinRepository.countByEnMantenimientoTrue();
+
         return Map.of("En Operación", enOperacion, "En Mantenimiento", enMantenimiento);
     }
-
 
     public List<Monopatin> obtenerMonopatinesCercanos(double latitud, double longitud, double radio) {
         return monopatinRepository.findMonopatinesCercanos(latitud, longitud, radio);
@@ -56,5 +57,9 @@ public class MonopatinService {
 
     public List<Monopatin> obtenerMonopatinesConMasViajes(int minViajes, int anio) {
         return viajeClient.obtenerMonopatinesConMasViajes(minViajes, anio);
+    }
+
+    public List<Monopatin> obtenerMonopatinesKilometros(Double km) {
+        return monopatinRepository.findMonopatinesKilometros(km);
     }
 }

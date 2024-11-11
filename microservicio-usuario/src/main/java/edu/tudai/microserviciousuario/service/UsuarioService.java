@@ -1,8 +1,11 @@
 package edu.tudai.microserviciousuario.service;
 
+import edu.tudai.microserviciousuario.entity.Monopatin;
 import edu.tudai.microserviciousuario.entity.Usuario;
+import edu.tudai.microserviciousuario.client.monopatinClient;
 import edu.tudai.microserviciousuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +16,8 @@ import java.util.List;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+
+    private final monopatinClient monopatinClient;
 
     @Transactional(readOnly = true)
     public List<Usuario> findAll() {
@@ -38,4 +43,11 @@ public class UsuarioService {
     public void delete(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    /**********************************************************/
+
+    public List<Monopatin> obtenerMonopatinesCercanos(double latitud, double longitud, double radio){
+        return monopatinClient.obtenerMonopatinesCercanos(latitud, longitud, radio);
+    }
+
 }

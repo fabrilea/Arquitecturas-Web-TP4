@@ -1,4 +1,4 @@
-package edu.tudai.microserviciomonopatin.entity;
+package edu.tudai.microservicioadministrador.entity;
 
 import jakarta.persistence.*;
 

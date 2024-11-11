@@ -7,6 +7,7 @@ import edu.tudai.microserviciousuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -43,10 +44,7 @@ public class CuentaService {
 
     /****************************************************************/
 
-    public void anularCuenta(Long cuentaId) {
-        Cuenta cuenta = cuentaRepository.findById(cuentaId)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
-        cuenta.setActiva(false);
-        cuentaRepository.save(cuenta);
-    }
+    public void anularCuenta(Cuenta cuenta) { cuentaRepository.save(cuenta); }
+
+
 }

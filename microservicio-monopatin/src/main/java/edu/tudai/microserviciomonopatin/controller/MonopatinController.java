@@ -74,7 +74,7 @@ public class MonopatinController {
     /********************************************************************/
 
 
-    @GetMapping("/viajes")
+    @GetMapping("/viajes/{minViajes}/{anio}")
     public ResponseEntity<List<Monopatin>> obtenerMonopatinesConMasViajes(
             @RequestParam int minViajes, @RequestParam int anio) {
         List<Monopatin> result = monopatinService.obtenerMonopatinesConMasViajes(minViajes, anio);
@@ -93,4 +93,12 @@ public class MonopatinController {
         List<Monopatin> monopatines = monopatinService.obtenerMonopatinesCercanos(latitud, longitud, radio);
         return ResponseEntity.ok(monopatines);
     }
+
+    @GetMapping("/reporte/kilometros/{km}")
+    public ResponseEntity<List<Monopatin>> getReporteKm(@PathVariable("km") Double km){
+        List<Monopatin> monopatines = monopatinService.obtenerMonopatinesKilometros(km);
+        return ResponseEntity.ok(monopatines);
+    }
+
+
 }
