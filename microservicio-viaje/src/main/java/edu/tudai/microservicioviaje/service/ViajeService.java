@@ -19,10 +19,9 @@ public class ViajeService {
 
     private final ViajeRepository viajeRepository;
 
-    private static long tiempMaxPausa = 15; // Ejemplo: 30 minutos
-    private static double tarifaExtra = 10.0; // Ejemplo: 10 unidades monetarias
+    private static long tiempMaxPausa = 15;
+    private static double tarifaExtraPorMinuto = 10.0;
     private static double costoKilometro = 7.5;
-    private final ContentNegotiatingViewResolver viewResolver;
 
     @Transactional(readOnly = true)
     public List<Viaje> findAll() {
@@ -119,7 +118,7 @@ public class ViajeService {
     // total += viaje.getTiempoUso() - tiempo(antes de la pausa) * costoKilometro;
     // total += viaje.getTiempoUso() -(viaje.getTiempoUso() - tiempo(antes de la pausa)) * tarifaExtra;
     // no encotre la forma de lo otro por eso suerte a quien lo intente
-    /*public double calcularCostoViaje(long viajeId) {
+    public double calcularCostoViaje(long viajeId) {
         Viaje viaje = viajeRepository.findById(viajeId).orElseThrow(() -> new RuntimeException("viaje no encontrado"));
         double total = 0.0;
 
@@ -128,7 +127,7 @@ public class ViajeService {
 
             if (tiempo != null) {
                 double minutos = tiempo.toMinutes() + (tiempo.getSeconds() % 60) / 60.0;
-                total += minutos * tarifaExtraPorMinuto; // tarifaExtraPorMinuto debe estar definido
+                total += minutos * tarifaExtraPorMinuto; //
             }
         }
 
@@ -148,6 +147,6 @@ public class ViajeService {
         }
         return null; // Retorna null si no se encuentra ninguna pausa que exceda la duración máxima
     }
-*/
+
 
 }

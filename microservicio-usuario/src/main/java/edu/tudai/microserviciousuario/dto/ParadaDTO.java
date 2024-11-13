@@ -1,32 +1,27 @@
-package edu.tudai.microserviciousuario.entity;
+package edu.tudai.microserviciousuario.dto;
 
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-public class Parada {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ParadaDTO {
 
     private String nombre;
     private double latitud;
     private double longitud;
 
     @OneToMany(mappedBy = "parada")
-    private List<Monopatin> monopatines;
+    private List<MonopatinDTO> monopatines;
 
 
 
-    public Parada() {
+    public ParadaDTO() {
         super();
         this.monopatines = new ArrayList<>();
     }
 
-    public Parada(String nombre, String direccion, Double latitud, Double longitud) {
+    public ParadaDTO(String nombre, Double latitud, Double longitud) {
         super();
         this.nombre = nombre;
         this.latitud = latitud;
@@ -34,9 +29,6 @@ public class Parada {
     }
 
     // Getters y Setters
-    public Long getId() {
-        return id;
-    }
 
     public String getNombre() {
         return nombre;
@@ -62,7 +54,7 @@ public class Parada {
         this.longitud = longitud;
     }
 
-    public List<Monopatin> getMonopatines() {
+    public List<MonopatinDTO> getMonopatines() {
         return monopatines;
     }
 

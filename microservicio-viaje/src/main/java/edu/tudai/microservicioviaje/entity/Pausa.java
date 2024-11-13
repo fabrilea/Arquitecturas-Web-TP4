@@ -13,7 +13,7 @@ public class Pausa {
 
     private LocalDateTime inicio;
     private LocalDateTime fin;
-    private double duracion;
+    private long duracion;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "viaje_id", nullable = false)
@@ -21,7 +21,7 @@ public class Pausa {
 
     public Pausa() {}
 
-    public Pausa(LocalDateTime inicio, LocalDateTime fin, double duracion, Viaje viaje) {
+    public Pausa(LocalDateTime inicio, LocalDateTime fin, long duracion, Viaje viaje) {
         this.inicio = inicio;
         this.fin = fin;
         this.duracion = duracion;
@@ -49,11 +49,11 @@ public class Pausa {
         this.fin = fin;
     }
 
-    public double getDuracion() {
+    public long getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(double duracion) {
+    public void setDuracion(long duracion) {
         this.duracion = duracion;
     }
 

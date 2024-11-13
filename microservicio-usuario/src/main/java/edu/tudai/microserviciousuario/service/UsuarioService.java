@@ -1,11 +1,10 @@
 package edu.tudai.microserviciousuario.service;
 
-import edu.tudai.microserviciousuario.entity.Monopatin;
+import edu.tudai.microserviciousuario.dto.MonopatinDTO;
 import edu.tudai.microserviciousuario.entity.Usuario;
 import edu.tudai.microserviciousuario.client.monopatinClient;
 import edu.tudai.microserviciousuario.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +45,7 @@ public class UsuarioService {
 
     /**********************************************************/
 
-    public List<Monopatin> obtenerMonopatinesCercanos(double latitud, double longitud, double radio){
+    public List<MonopatinDTO> obtenerMonopatinesCercanos(double latitud, double longitud, double radio){
         return monopatinClient.obtenerMonopatinesCercanos(latitud, longitud, radio);
     }
 

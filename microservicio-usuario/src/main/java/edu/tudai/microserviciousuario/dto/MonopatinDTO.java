@@ -1,14 +1,9 @@
-package edu.tudai.microserviciousuario.entity;
+package edu.tudai.microserviciousuario.dto;
 
-import edu.tudai.microserviciousuario.entity.Parada;
+import edu.tudai.microserviciousuario.dto.ParadaDTO;
 import jakarta.persistence.*;
 
-@Entity
-public class Monopatin {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class MonopatinDTO {
 
     private double bateria;
     private boolean disponible;
@@ -19,15 +14,14 @@ public class Monopatin {
     private double tiempoUso;
 
     @ManyToOne
-    @JoinColumn(name = "parada_id", nullable = false)
-    private Parada parada;
+    private ParadaDTO parada;
 
 
-    public Monopatin() {
+    public MonopatinDTO() {
         super();
     }
 
-    public Monopatin(Double latitud, Double longitud, Double bateria, double kilometrosRecorridos, double tiempoUso, Parada parada) {
+    public MonopatinDTO(Double latitud, Double longitud, Double bateria, double kilometrosRecorridos, double tiempoUso, ParadaDTO parada) {
         super();
         this.latitud = latitud;
         this.longitud = longitud;
@@ -37,10 +31,6 @@ public class Monopatin {
         this.kilometrosRecorridos = kilometrosRecorridos;
         this.tiempoUso = tiempoUso;
         this.parada = parada;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Double getLatitud() {
@@ -99,11 +89,11 @@ public class Monopatin {
         this.tiempoUso = tiempo;
     }
 
-    public Parada getParada(){
+    public ParadaDTO getParada(){
         return parada;
     }
 
-    public void setParada(Parada parada){
+    public void setParada(ParadaDTO parada){
         this.parada = parada;
     }
 }

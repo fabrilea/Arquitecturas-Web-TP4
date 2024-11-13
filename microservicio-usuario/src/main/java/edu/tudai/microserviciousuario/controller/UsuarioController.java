@@ -1,6 +1,6 @@
 package edu.tudai.microserviciousuario.controller;
 
-import edu.tudai.microserviciousuario.entity.Monopatin;
+import edu.tudai.microserviciousuario.dto.MonopatinDTO;
 import edu.tudai.microserviciousuario.entity.Usuario;
 import edu.tudai.microserviciousuario.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
@@ -70,8 +70,8 @@ public class UsuarioController {
     /*******************************************************************/
 
     @GetMapping("/monopatin/cercanos")
-    public ResponseEntity<List<Monopatin>> obtenerMonopatinesCercanos(@RequestParam double latitud, @RequestParam double longitud, @RequestParam double radio){
-        List<Monopatin> monopatines = usuarioService.obtenerMonopatinesCercanos(latitud, longitud, radio);
+    public ResponseEntity<List<MonopatinDTO>> obtenerMonopatinesCercanos(@RequestParam double latitud, @RequestParam double longitud, @RequestParam double radio){
+        List<MonopatinDTO> monopatines = usuarioService.obtenerMonopatinesCercanos(latitud, longitud, radio);
         if (monopatines.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
